@@ -1,5 +1,7 @@
 package com.voltx.entity;
 
+import com.voltx.enums.AccountStatus;
+import com.voltx.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
@@ -50,4 +52,13 @@ public class User {
 
     @Column(length = 500)
     private String bio;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
+    @Enumerated(EnumType.STRING)
+    private AccountStatus accountStatus;
+
+    private boolean verified;
 }
