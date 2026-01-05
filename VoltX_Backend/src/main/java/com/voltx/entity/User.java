@@ -5,6 +5,7 @@ import com.voltx.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
@@ -65,4 +66,20 @@ public class User {
     private int adrenalinePoints;
 
     private int level;
+
+    private LocalDateTime suspensionStartAt;
+
+    private LocalDateTime suspensionEndAt;
+
+    private int suspensionCount;
+
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        if (accountStatus == null) {
+            accountStatus = AccountStatus.ACTIVE;
+        }
+    }
 }
