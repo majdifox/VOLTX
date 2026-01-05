@@ -61,4 +61,8 @@ public class User {
     private AccountStatus accountStatus;
 
     private boolean verified;
+
+    private int adrenalinePoints;
+
+    private int level;
 }
