@@ -2,6 +2,7 @@ package com.voltx.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "users")
@@ -22,6 +23,10 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
+    private String gender;
+
+    private LocalDate birthday;
+
     @Column(nullable = false, unique = true)
     private String username;
 
@@ -30,4 +35,19 @@ public class User {
 
     @Column(nullable = false)
     private String passwordHash;
+
+    private String profilePicture;
+
+    private String bannerPicture;
+
+    private String country;
+
+    private String countryFlag;
+
+    private String city;
+
+    private String phoneNumber;
+
+    @Column(length = 500)
+    private String bio;
 }
