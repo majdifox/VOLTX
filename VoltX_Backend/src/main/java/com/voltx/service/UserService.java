@@ -12,7 +12,9 @@ import com.voltx.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -23,6 +25,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final FollowRepository followRepository;
     private final GamificationService gamificationService;
+    private final FileStorageService fileStorageService;
 
     public User findById(Long id) {
         return userRepository.findById(id)
@@ -151,5 +154,27 @@ public class UserService {
                 .orElseThrow(() -> new BadRequestException("Not following this user"));
 
         followRepository.delete(follow);
+    }
+
+    @Transactional
+    public User updateProfilePicture(User user, MultipartFile file) throws IOException {
+        if (user.getProfilePicture() != null) {
+            fileStorageService.deleteFile(user.getProfilePicture());
+        }
+
+        String filePath = fileStorageService.storeFile(file, "profiles");
+        user.setProfilePicture(filePath);
+        return userRepository.save(user);
+    }
+
+    @Transactional
+    public User updateBannerPicture(User user, MultipartFile file) throws IOException {
+        if (user.getBannerPicture() != null) {
+            fileStorageService.deleteFile(user.getBannerPicture());
+        }
+
+        String filePath = fileStorageService.storeFile(file, "banners");
+        user.setBannerPicture(filePath);
+        return userRepository.save(user);
     }
 }
