@@ -3,11 +3,14 @@ package com.voltx.service;
 import com.voltx.dto.CreateEventRequest;
 import com.voltx.dto.EventResponse;
 import com.voltx.entity.Event;
+import com.voltx.entity.EventMembership;
 import com.voltx.entity.User;
 import com.voltx.enums.EventLifecycleStatus;
 import com.voltx.enums.EventModerationStatus;
+import com.voltx.enums.MembershipStatus;
 import com.voltx.exception.BadRequestException;
 import com.voltx.exception.ResourceNotFoundException;
+import com.voltx.repository.EventMembershipRepository;
 import com.voltx.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,6 +26,7 @@ import java.time.format.DateTimeFormatter;
 public class EventService {
 
     private final EventRepository eventRepository;
+    private final EventMembershipRepository membershipRepository;
     private final UserService userService;
 
     public Event findById(Long id) {
@@ -92,6 +96,61 @@ public class EventService {
         }
 
         eventRepository.delete(event);
+    }
+
+    @Transactional
+    public void joinEvent(Long eventId, User user) {
+        Event event = findById(eventId);
+
+        if (event.getCurrentParticipants() >= event.getMaxParticipants()) {
+            throw new BadRequestException("Event is full");
+        }
+
+        if (membershipRepository.existsByEventAndMember(event, user)) {
+            throw new BadRequestException("Already joined this event");
+        }
+
+        EventMembership membership = EventMembership.builder()
+                .event(event)
+                .member(user)
+                .status(MembershipStatus.PENDING)
+                .build();
+
+        membershipRepository.save(membership);
+    }
+
+    @Transactional
+    public void leaveEvent(Long eventId, User user) {
+        Event event = findById(eventId);
+
+        EventMembership membership = membershipRepository.findByEventAndMember(event, user)
+                .orElseThrow(() -> new BadRequestException("Not a member of this event"));
+
+        membershipRepository.delete(membership);
+
+        if (membership.getStatus() == MembershipStatus.ACCEPTED) {
+            event.setCurrentParticipants(Math.max(0, event.getCurrentParticipants() - 1));
+            eventRepository.save(event);
+        }
+    }
+
+    @Transactional
+    public void acceptMember(Long eventId, Long memberId, User organizer) {
+        Event event = findById(eventId);
+
+        if (!event.getOrganizer().getId().equals(organizer.getId())) {
+            throw new BadRequestException("Only the organizer can accept members");
+        }
+
+        User member = userService.findById(memberId);
+        EventMembership membership = membershipRepository.findByEventAndMember(event, member)
+                .orElseThrow(() -> new ResourceNotFoundException("Membership not found"));
+
+        membership.setStatus(MembershipStatus.ACCEPTED);
+        membershipRepository.save(membership);
+
+        event.setCurrentParticipants(event.getCurrentParticipants() + 1);
+        eventRepository.save(event);
     }
 
     public EventResponse toResponse(Event event) {
