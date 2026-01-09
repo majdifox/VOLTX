@@ -4,6 +4,7 @@ import com.voltx.dto.CreatePostRequest;
 import com.voltx.dto.PostResponse;
 import com.voltx.entity.Post;
 import com.voltx.entity.User;
+import com.voltx.exception.BadRequestException;
 import com.voltx.exception.ResourceNotFoundException;
 import com.voltx.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,35 @@ public class PostService {
 
     public Page<Post> getFeed(Pageable pageable) {
         return postRepository.findAllByOrderByCreatedAtDesc(pageable);
+    }
+
+    @Transactional
+    public Post updatePost(Long postId, User user, CreatePostRequest request) {
+        Post post = findById(postId);
+
+        if (!post.getAuthor().getId().equals(user.getId())) {
+            throw new BadRequestException("You can only edit your own posts");
+        }
+
+        if (request.getContent() != null) {
+            post.setContent(request.getContent());
+        }
+        if (request.getLocation() != null) {
+            post.setLocation(request.getLocation());
+        }
+
+        return postRepository.save(post);
+    }
+
+    @Transactional
+    public void deletePost(Long postId, User user) {
+        Post post = findById(postId);
+
+        if (!post.getAuthor().getId().equals(user.getId())) {
+            throw new BadRequestException("You can only delete your own posts");
+        }
+
+        postRepository.delete(post);
     }
 
     public PostResponse toResponse(Post post) {
