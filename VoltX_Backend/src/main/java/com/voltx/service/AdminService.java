@@ -106,6 +106,38 @@ public class AdminService {
         logModerationAction(admin, user, "UNSUSPEND", "Account reactivated by admin");
     }
 
+    @Transactional
+    public void approveEvent(Long eventId, User admin) {
+        validateAdminAccess(admin);
+
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new ResourceNotFoundException("Event not found"));
+
+        event.setModerationStatus(EventModerationStatus.APPROVED);
+        eventRepository.save(event);
+
+        notificationService.createNotification(
+                event.getOrganizer(),
+                "Your event '" + event.getTitle() + "' has been approved"
+        );
+    }
+
+    @Transactional
+    public void rejectEvent(Long eventId, User admin, String reason) {
+        validateAdminAccess(admin);
+
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new ResourceNotFoundException("Event not found"));
+
+        event.setModerationStatus(EventModerationStatus.REJECTED);
+        eventRepository.save(event);
+
+        notificationService.createNotification(
+                event.getOrganizer(),
+                "Your event '" + event.getTitle() + "' was rejected. Reason: " + reason
+        );
+    }
+
     private void logModerationAction(User admin, User targetUser, String actionType, String reason) {
         ModerationAction action = ModerationAction.builder()
                 .moderator(admin)
