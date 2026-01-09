@@ -3,9 +3,11 @@ package com.voltx.service;
 import com.voltx.dto.CreatePostRequest;
 import com.voltx.dto.PostResponse;
 import com.voltx.entity.Post;
+import com.voltx.entity.PostLike;
 import com.voltx.entity.User;
 import com.voltx.exception.BadRequestException;
 import com.voltx.exception.ResourceNotFoundException;
+import com.voltx.repository.PostLikeRepository;
 import com.voltx.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final PostLikeRepository postLikeRepository;
     private final UserService userService;
 
     public Post findById(Long id) {
@@ -76,6 +79,36 @@ public class PostService {
         }
 
         postRepository.delete(post);
+    }
+
+    @Transactional
+    public void likePost(Long postId, User user) {
+        Post post = findById(postId);
+
+        if (postLikeRepository.existsByPostAndUser(post, user)) {
+            throw new BadRequestException("Post already liked");
+        }
+
+        PostLike like = PostLike.builder()
+                .post(post)
+                .user(user)
+                .build();
+
+        postLikeRepository.save(like);
+        post.setLikesCount(post.getLikesCount() + 1);
+        postRepository.save(post);
+    }
+
+    @Transactional
+    public void unlikePost(Long postId, User user) {
+        Post post = findById(postId);
+
+        PostLike like = postLikeRepository.findByPostAndUser(post, user)
+                .orElseThrow(() -> new BadRequestException("Post not liked yet"));
+
+        postLikeRepository.delete(like);
+        post.setLikesCount(Math.max(0, post.getLikesCount() - 1));
+        postRepository.save(post);
     }
 
     public PostResponse toResponse(Post post) {
