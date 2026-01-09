@@ -1,5 +1,6 @@
 package com.voltx.service;
 
+import com.voltx.dto.UpdateProfileRequest;
 import com.voltx.dto.UserCardResponse;
 import com.voltx.dto.UserProfileResponse;
 import com.voltx.entity.User;
@@ -8,6 +9,10 @@ import com.voltx.repository.FollowRepository;
 import com.voltx.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor
@@ -80,5 +85,39 @@ public class UserService {
                 .adrenalinePoints(user.getAdrenalinePoints())
                 .level(user.getLevel())
                 .build();
+    }
+
+    @Transactional
+    public User updateProfile(User user, UpdateProfileRequest request) {
+        if (request.getFirstName() != null) {
+            user.setFirstName(request.getFirstName());
+        }
+        if (request.getLastName() != null) {
+            user.setLastName(request.getLastName());
+        }
+        if (request.getGender() != null) {
+            user.setGender(request.getGender());
+        }
+        if (request.getBirthday() != null) {
+            LocalDate birthday = LocalDate.parse(request.getBirthday(), DateTimeFormatter.ISO_DATE);
+            user.setBirthday(birthday);
+        }
+        if (request.getCountry() != null) {
+            user.setCountry(request.getCountry());
+        }
+        if (request.getCountryFlag() != null) {
+            user.setCountryFlag(request.getCountryFlag());
+        }
+        if (request.getCity() != null) {
+            user.setCity(request.getCity());
+        }
+        if (request.getPhoneNumber() != null) {
+            user.setPhoneNumber(request.getPhoneNumber());
+        }
+        if (request.getBio() != null) {
+            user.setBio(request.getBio());
+        }
+
+        return userRepository.save(user);
     }
 }
