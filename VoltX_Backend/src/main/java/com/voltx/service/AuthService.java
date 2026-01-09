@@ -1,11 +1,13 @@
 package com.voltx.service;
 
 import com.voltx.dto.AuthResponse;
+import com.voltx.dto.LoginRequest;
 import com.voltx.dto.RegisterRequest;
 import com.voltx.entity.User;
 import com.voltx.enums.AccountStatus;
 import com.voltx.enums.Role;
 import com.voltx.exception.BadRequestException;
+import com.voltx.exception.UnauthorizedException;
 import com.voltx.repository.UserRepository;
 import com.voltx.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -66,6 +68,42 @@ public class AuthService {
 
         return AuthResponse.builder()
                 .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .tokenType("Bearer")
+                .build();
+    }
+
+    public AuthResponse login(LoginRequest request) {
+        User user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new UnauthorizedException("Invalid credentials"));
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
+            throw new UnauthorizedException("Invalid credentials");
+        }
+
+        String accessToken = jwtUtil.generateAccessToken(user.getUsername());
+        String refreshToken = jwtUtil.generateRefreshToken(user.getUsername());
+
+        return AuthResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .tokenType("Bearer")
+                .build();
+    }
+
+    public AuthResponse refreshToken(String refreshToken) {
+        String username = jwtUtil.extractUsername(refreshToken);
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UnauthorizedException("Invalid token"));
+
+        if (!jwtUtil.isTokenValid(refreshToken, username)) {
+            throw new UnauthorizedException("Invalid token");
+        }
+
+        String newAccessToken = jwtUtil.generateAccessToken(username);
+
+        return AuthResponse.builder()
+                .accessToken(newAccessToken)
                 .refreshToken(refreshToken)
                 .tokenType("Bearer")
                 .build();
