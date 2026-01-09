@@ -7,6 +7,8 @@ import com.voltx.entity.User;
 import com.voltx.exception.ResourceNotFoundException;
 import com.voltx.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,5 +38,28 @@ public class PostService {
                 .build();
 
         return postRepository.save(post);
+    }
+
+    public Page<Post> getPostsByUser(User user, Pageable pageable) {
+        return postRepository.findByAuthorOrderByCreatedAtDesc(user, pageable);
+    }
+
+    public Page<Post> getFeed(Pageable pageable) {
+        return postRepository.findAllByOrderByCreatedAtDesc(pageable);
+    }
+
+    public PostResponse toResponse(Post post) {
+        return PostResponse.builder()
+                .id(post.getId())
+                .content(post.getContent())
+                .mediaUrl(post.getMediaUrl())
+                .location(post.getLocation())
+                .type(post.getType().name())
+                .riskLevel(post.getRiskLevel().name())
+                .author(userService.toCardResponse(post.getAuthor()))
+                .likesCount(post.getLikesCount())
+                .commentsCount(post.getCommentsCount())
+                .createdAt(post.getCreatedAt() != null ? post.getCreatedAt().toString() : null)
+                .build();
     }
 }
