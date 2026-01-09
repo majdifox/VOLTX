@@ -3,7 +3,9 @@ package com.voltx.service;
 import com.voltx.dto.UpdateProfileRequest;
 import com.voltx.dto.UserCardResponse;
 import com.voltx.dto.UserProfileResponse;
+import com.voltx.entity.Follow;
 import com.voltx.entity.User;
+import com.voltx.exception.BadRequestException;
 import com.voltx.exception.ResourceNotFoundException;
 import com.voltx.repository.FollowRepository;
 import com.voltx.repository.UserRepository;
@@ -119,5 +121,35 @@ public class UserService {
         }
 
         return userRepository.save(user);
+    }
+
+    @Transactional
+    public void followUser(User follower, Long followingId) {
+        if (follower.getId().equals(followingId)) {
+            throw new BadRequestException("Cannot follow yourself");
+        }
+
+        User following = findById(followingId);
+
+        if (followRepository.existsByFollowerAndFollowing(follower, following)) {
+            throw new BadRequestException("Already following this user");
+        }
+
+        Follow follow = Follow.builder()
+                .follower(follower)
+                .following(following)
+                .build();
+
+        followRepository.save(follow);
+    }
+
+    @Transactional
+    public void unfollowUser(User follower, Long followingId) {
+        User following = findById(followingId);
+
+        Follow follow = followRepository.findByFollowerAndFollowing(follower, following)
+                .orElseThrow(() -> new BadRequestException("Not following this user"));
+
+        followRepository.delete(follow);
     }
 }
