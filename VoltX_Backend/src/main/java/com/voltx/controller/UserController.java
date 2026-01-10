@@ -3,7 +3,6 @@ package com.voltx.controller;
 import com.voltx.dto.UpdateProfileRequest;
 import com.voltx.dto.UserProfileResponse;
 import com.voltx.entity.User;
-import com.voltx.security.CurrentUser;
 import com.voltx.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
