@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: voltx_postgres
+    environment:
+      POSTGRES_DB: voltx
+      POSTGRES_USER: voltx_user
+      POSTGRES_PASSWORD: voltx_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - voltx_network
+
+  # Backend
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: voltx_backend
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/voltx
+      - SPRING_DATASOURCE_USERNAME=voltx_user
+      - SPRING_DATASOURCE_PASSWORD=voltx_password
+      - JWT_SECRET=voltx-secret-key-for-jwt-authentication-must-be-at-least-256-bits
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - voltx_network
+
+  # Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: voltx_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - voltx_network
+
+volumes:
+  postgres_data:
+
+networks:
+  voltx_network:
+    driver: bridge
