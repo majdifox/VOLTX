@@ -1,0 +1,59 @@
+.App {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+}
+
+/* VoltX Theme Colors */
+:root {
+  --primary-color: #00d4ff;
+  --secondary-color: #ff6b00;
+  --danger-color: #ff3366;
+  --success-color: #00ff88;
+  --warning-color: #ffaa00;
+
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #2a2a2a;
+
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --text-muted: #666666;
+
+  --border-color: #333333;
+  --border-hover: #555555;
+}
+
+/* Utility classes */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  background: var(--primary-color);
+  color: var(--bg-primary);
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--secondary-color);
+}
+
+.btn-danger {
+  background: var(--danger-color);
+}
+
+.card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.card:hover {
+  border-color: var(--border-hover);
+}
