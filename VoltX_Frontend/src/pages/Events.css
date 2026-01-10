@@ -1,0 +1,136 @@
+.events {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.events-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.events-header h1 {
+  color: var(--text-primary);
+  font-size: 28px;
+  margin: 0;
+}
+
+.create-event-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+.events-loading,
+.events-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.events-error h3 {
+  color: var(--danger-color);
+  margin-bottom: 8px;
+}
+
+.events-error p {
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.events-tabs {
+  display: flex;
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.events-tabs .tab {
+  flex: 1;
+  padding: 12px 20px;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.events-tabs .tab:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.events-tabs .tab.active {
+  background: var(--primary-color);
+  color: var(--bg-primary);
+}
+
+.events-container {
+  flex: 1;
+}
+
+.empty-events {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+  background: var(--bg-tertiary);
+  border-radius: 16px;
+  border: 2px dashed var(--border-color);
+}
+
+.empty-events-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  opacity: 0.6;
+}
+
+.empty-events h3 {
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.empty-events p {
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  max-width: 400px;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .events-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .events-header h1 {
+    text-align: center;
+  }
+
+  .create-event-btn {
+    width: 100%;
+  }
+
+  .events-tabs {
+    flex-direction: column;
+  }
+
+  .events-grid {
+    grid-template-columns: 1fr;
+  }
+}
