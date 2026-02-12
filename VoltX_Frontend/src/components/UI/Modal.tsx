@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Button } from './Button';
 
 interface ModalProps {
@@ -8,8 +10,8 @@ interface ModalProps {
   children: React.ReactNode;
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
   showCloseButton?: boolean;
-  closeOnEscape?: boolean;
   closeOnBackdrop?: boolean;
+  closeOnEscape?: boolean;
   className?: string;
 }
 
@@ -20,11 +22,21 @@ export const Modal: React.FC<ModalProps> = ({
   children,
   size = 'md',
   showCloseButton = true,
-  closeOnEscape = true,
   closeOnBackdrop = true,
+  closeOnEscape = true,
   className = ''
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
+  const previousActiveElement = useRef<HTMLElement | null>(null);
+
+  // Size classes
+  const sizeClasses = {
+    sm: 'max-w-md',
+    md: 'max-w-lg',
+    lg: 'max-w-2xl',
+    xl: 'max-w-4xl',
+    full: 'max-w-none m-4'
+  };
 
   // Handle escape key
   useEffect(() => {
@@ -40,115 +52,90 @@ export const Modal: React.FC<ModalProps> = ({
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isOpen, closeOnEscape, onClose]);
 
-  // Handle body scroll lock
+  // Focus management
   useEffect(() => {
     if (isOpen) {
+      // Store the previously focused element
+      previousActiveElement.current = document.activeElement as HTMLElement;
+      
+      // Focus the modal
+      modalRef.current?.focus();
+      
+      // Prevent body scroll
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'unset';
+      // Restore focus and body scroll
+      if (previousActiveElement.current) {
+        previousActiveElement.current.focus();
+      }
+      document.body.style.overflow = '';
     }
 
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
     };
   }, [isOpen]);
 
-  // Focus management
-  useEffect(() => {
-    if (isOpen && modalRef.current) {
-      modalRef.current.focus();
-    }
-  }, [isOpen]);
-
-  const getSizeStyles = () => {
-    switch (size) {
-      case 'sm':
-        return 'max-w-sm';
-      case 'lg':
-        return 'max-w-4xl';
-      case 'xl':
-        return 'max-w-6xl';
-      case 'full':
-        return 'max-w-full m-4';
-      default:
-        return 'max-w-2xl';
-    }
-  };
-
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (closeOnBackdrop && e.target === e.currentTarget) {
+  // Handle backdrop click
+  const handleBackdropClick = (event: React.MouseEvent) => {
+    if (event.target === event.currentTarget && closeOnBackdrop) {
       onClose();
     }
   };
 
   if (!isOpen) return null;
 
-  return (
+  const modalContent = (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black/60 backdrop-blur-sm p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50 transition-opacity duration-300"
       onClick={handleBackdropClick}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby={title ? 'modal-title' : undefined}
     >
       <div
         ref={modalRef}
-        tabIndex={-1}
         className={`
-          ${getSizeStyles()}
-          w-full bg-white rounded-xl shadow-2xl
-          transform transition-all duration-300 ease-out
-          animate-in fade-in-0 zoom-in-95 duration-300
-          focus:outline-none
-          ${className}
+          relative w-full bg-white dark:bg-gray-800 rounded-xl shadow-xl
+          transform transition-all duration-300 scale-100
+          ${sizeClasses[size]} ${className}
         `}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={title ? 'modal-title' : undefined}
+        tabIndex={-1}
       >
         {/* Header */}
         {(title || showCloseButton) && (
-          <div className="flex items-center justify-between p-6 border-b border-gray-200">
+          <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
             {title && (
-              <h2 
-                id="modal-title" 
-                className="text-xl font-semibold text-gray-900"
-              >
+              <h2 id="modal-title" className="text-xl font-semibold text-gray-900 dark:text-white">
                 {title}
               </h2>
             )}
-            
             {showCloseButton && (
-              <button
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={onClose}
-                className="ml-4 text-gray-400 hover:text-gray-600 transition-colors p-2 rounded-lg hover:bg-gray-100"
+                icon={XMarkIcon}
+                className="ml-auto"
                 aria-label="Close modal"
-              >
-                <svg
-                  className="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
+              />
             )}
           </div>
         )}
 
         {/* Content */}
-        <div className="p-6">
+        <div className="px-6 py-4">
           {children}
         </div>
       </div>
     </div>
   );
+
+  // Render modal in portal
+  return createPortal(modalContent, document.body);
 };
 
-// Confirmation Modal for common use cases
+// Confirmation Modal Component
 interface ConfirmModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -157,8 +144,7 @@ interface ConfirmModalProps {
   message: string;
   confirmText?: string;
   cancelText?: string;
-  type?: 'danger' | 'warning' | 'info';
-  loading?: boolean;
+  confirmVariant?: 'primary' | 'danger';
 }
 
 export const ConfirmModal: React.FC<ConfirmModalProps> = ({
@@ -169,48 +155,80 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
   message,
   confirmText = 'Confirm',
   cancelText = 'Cancel',
-  type = 'info',
-  loading = false
+  confirmVariant = 'primary'
 }) => {
-  const getConfirmVariant = () => {
+  const handleConfirm = () => {
+    onConfirm();
+    onClose();
+  };
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose} title={title} size="sm">
+      <div className="space-y-4">
+        <p className="text-gray-600 dark:text-gray-300">{message}</p>
+        
+        <div className="flex space-x-3 justify-end">
+          <Button variant="ghost" onClick={onClose}>
+            {cancelText}
+          </Button>
+          <Button 
+            variant={confirmVariant === 'danger' ? 'danger' : 'primary'} 
+            onClick={handleConfirm}
+          >
+            {confirmText}
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  );
+};
+
+// Alert Modal Component  
+interface AlertModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title?: string;
+  message: string;
+  type?: 'info' | 'success' | 'warning' | 'error';
+}
+
+export const AlertModal: React.FC<AlertModalProps> = ({
+  isOpen,
+  onClose,
+  title,
+  message,
+  type = 'info'
+}) => {
+  const getIcon = () => {
     switch (type) {
-      case 'danger':
-        return 'danger';
-      case 'warning':
-        return 'warning';
-      default:
-        return 'primary';
+      case 'success': return '✅';
+      case 'warning': return '⚠️';
+      case 'error': return '❌';
+      default: return 'ℹ️';
+    }
+  };
+
+  const getTitle = () => {
+    if (title) return title;
+    switch (type) {
+      case 'success': return 'Success';
+      case 'warning': return 'Warning';
+      case 'error': return 'Error';
+      default: return 'Information';
     }
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title={title}
-      size="sm"
-    >
+    <Modal isOpen={isOpen} onClose={onClose} title={getTitle()} size="sm">
       <div className="space-y-4">
-        <p className="text-gray-600 leading-relaxed">
-          {message}
-        </p>
+        <div className="flex items-center space-x-3">
+          <span className="text-2xl">{getIcon()}</span>
+          <p className="text-gray-600 dark:text-gray-300">{message}</p>
+        </div>
         
-        <div className="flex justify-end space-x-3">
-          <Button
-            variant="ghost"
-            onClick={onClose}
-            disabled={loading}
-          >
-            {cancelText}
-          </Button>
-          
-          <Button
-            variant={getConfirmVariant()}
-            onClick={onConfirm}
-            loading={loading}
-            disabled={loading}
-          >
-            {confirmText}
+        <div className="flex justify-end">
+          <Button variant="primary" onClick={onClose}>
+            OK
           </Button>
         </div>
       </div>
