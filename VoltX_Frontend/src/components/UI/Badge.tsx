@@ -1,159 +1,193 @@
 import React from 'react';
-import { THEME } from '../../config/theme';
 
 interface BadgeProps {
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'dark' | 'light';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   rounded?: boolean;
   outline?: boolean;
+  dot?: boolean;
   className?: string;
-  onClick?: () => void;
 }
 
 export const Badge: React.FC<BadgeProps> = ({
   children,
-  variant = 'primary',
-  size = 'md',
+  variant = 'default',
+  size = 'sm',
   rounded = false,
   outline = false,
-  className = '',
-  onClick
+  dot = false,
+  className = ''
 }) => {
-  const getVariantStyles = () => {
-    const colors = {
-      primary: outline 
-        ? `border-[${THEME.colors.primary}] text-[${THEME.colors.primary}] bg-transparent` 
-        : `bg-[${THEME.colors.primary}] text-white`,
-      secondary: outline 
-        ? `border-[${THEME.colors.secondary}] text-[${THEME.colors.secondary}] bg-transparent` 
-        : `bg-[${THEME.colors.secondary}] text-white`,
-      success: outline 
-        ? `border-[${THEME.colors.success}] text-[${THEME.colors.success}] bg-transparent` 
-        : `bg-[${THEME.colors.success}] text-white`,
-      warning: outline 
-        ? `border-[${THEME.colors.warning}] text-[${THEME.colors.warning}] bg-transparent` 
-        : `bg-[${THEME.colors.warning}] text-white`,
-      danger: outline 
-        ? `border-[${THEME.colors.danger}] text-[${THEME.colors.danger}] bg-transparent` 
-        : `bg-[${THEME.colors.danger}] text-white`,
-      info: outline 
-        ? 'border-blue-500 text-blue-500 bg-transparent' 
-        : 'bg-blue-500 text-white',
-      dark: outline 
-        ? `border-[${THEME.colors.dark}] text-[${THEME.colors.dark}] bg-transparent` 
-        : `bg-[${THEME.colors.dark}] text-white`,
-      light: outline 
-        ? 'border-gray-300 text-gray-600 bg-transparent' 
-        : 'bg-gray-100 text-gray-800'
-    };
-    
-    return colors[variant] + (outline ? ' border' : '');
+  // Size classes
+  const sizeClasses = {
+    xs: 'px-1.5 py-0.5 text-xs',
+    sm: 'px-2 py-1 text-xs',
+    md: 'px-2.5 py-1.5 text-sm',
+    lg: 'px-3 py-2 text-base'
   };
 
-  const getSizeStyles = () => {
-    switch (size) {
-      case 'sm':
-        return 'px-2 py-1 text-xs';
-      case 'lg':
-        return 'px-4 py-2 text-base';
-      default:
-        return 'px-3 py-1.5 text-sm';
+  // Variant classes for solid badges
+  const solidVariantClasses = {
+    default: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300',
+    primary: 'bg-primary text-white',
+    secondary: 'bg-gray-500 text-white',
+    success: 'bg-green-500 text-white',
+    warning: 'bg-yellow-500 text-white',
+    danger: 'bg-red-500 text-white',
+    info: 'bg-blue-500 text-white'
+  };
+
+  // Variant classes for outline badges
+  const outlineVariantClasses = {
+    default: 'border-gray-300 text-gray-700 dark:border-gray-600 dark:text-gray-300',
+    primary: 'border-primary text-primary',
+    secondary: 'border-gray-500 text-gray-500',
+    success: 'border-green-500 text-green-600',
+    warning: 'border-yellow-500 text-yellow-600',
+    danger: 'border-red-500 text-red-600',
+    info: 'border-blue-500 text-blue-600'
+  };
+
+  const baseClasses = `
+    inline-flex items-center font-medium
+    ${rounded ? 'rounded-full' : 'rounded-md'}
+    ${sizeClasses[size]}
+    ${outline
+      ? `border ${outlineVariantClasses[variant]}`
+      : solidVariantClasses[variant]
     }
-  };
+    ${className}
+  `.trim().replace(/\s+/g, ' ');
 
-  const isClickable = !!onClick;
+  if (dot) {
+    return (
+      <span className={`inline-flex items-center ${className}`}>
+        <span
+          className={`
+            w-2 h-2 rounded-full mr-2
+            ${solidVariantClasses[variant].split(' ')[0]}
+          `}
+        />
+        <span className="text-sm text-gray-700 dark:text-gray-300">{children}</span>
+      </span>
+    );
+  }
 
   return (
-    <span
-      onClick={onClick}
-      className={`
-        ${getVariantStyles()}
-        ${getSizeStyles()}
-        inline-flex items-center justify-center
-        font-medium
-        ${rounded ? 'rounded-full' : 'rounded-lg'}
-        ${isClickable ? 'cursor-pointer hover:opacity-80 transition-opacity duration-200' : ''}
-        ${className}
-      `}
-    >
+    <span className={baseClasses}>
       {children}
     </span>
   );
 };
 
-// Status Badge for common status indicators
+// Status Badge Component
 interface StatusBadgeProps {
-  status: 'active' | 'inactive' | 'pending' | 'suspended' | 'banned' | 'verified';
-  size?: 'sm' | 'md' | 'lg';
+  status: 'active' | 'inactive' | 'pending' | 'suspended' | 'banned' | 'online' | 'offline';
+  showDot?: boolean;
   className?: string;
 }
 
 export const StatusBadge: React.FC<StatusBadgeProps> = ({
   status,
-  size = 'md',
+  showDot = false,
   className = ''
 }) => {
-  const getStatusConfig = () => {
-    switch (status) {
-      case 'active':
-        return { variant: 'success' as const, label: 'Active' };
-      case 'inactive':
-        return { variant: 'light' as const, label: 'Inactive' };
-      case 'pending':
-        return { variant: 'warning' as const, label: 'Pending' };
-      case 'suspended':
-        return { variant: 'warning' as const, label: 'Suspended' };
-      case 'banned':
-        return { variant: 'danger' as const, label: 'Banned' };
-      case 'verified':
-        return { variant: 'info' as const, label: 'Verified' };
-      default:
-        return { variant: 'light' as const, label: status };
-    }
+  const statusConfig = {
+    active: { label: 'Active', variant: 'success' as const },
+    inactive: { label: 'Inactive', variant: 'default' as const },
+    pending: { label: 'Pending', variant: 'warning' as const },
+    suspended: { label: 'Suspended', variant: 'danger' as const },
+    banned: { label: 'Banned', variant: 'danger' as const },
+    online: { label: 'Online', variant: 'success' as const },
+    offline: { label: 'Offline', variant: 'default' as const }
   };
 
-  const { variant, label } = getStatusConfig();
+  const config = statusConfig[status];
 
   return (
-    <Badge variant={variant} size={size} rounded className={className}>
-      {label}
+    <Badge
+      variant={config.variant}
+      dot={showDot}
+      rounded
+      className={className}
+    >
+      {config.label}
     </Badge>
   );
 };
 
-// Level Badge for gamification levels
+// Level Badge Component
 interface LevelBadgeProps {
   level: number;
-  levelTitle?: string;
-  size?: 'sm' | 'md' | 'lg';
-  showLevel?: boolean;
+  maxLevel?: number;
+  showProgress?: boolean;
   className?: string;
 }
 
 export const LevelBadge: React.FC<LevelBadgeProps> = ({
   level,
-  levelTitle,
-  size = 'md',
-  showLevel = true,
+  maxLevel = 15,
+  showProgress = false,
   className = ''
 }) => {
-  const getVariantByLevel = (level: number) => {
-    if (level >= 10) return 'danger';
-    if (level >= 7) return 'warning';
-    if (level >= 4) return 'secondary';
-    return 'primary';
+  const getLevelInfo = (level: number) => {
+    if (level >= 13) return { label: 'Legend', variant: 'danger' as const, color: 'from-red-500 to-pink-600' };
+    if (level >= 10) return { label: 'Expert', variant: 'warning' as const, color: 'from-yellow-400 to-orange-500' };
+    if (level >= 7) return { label: 'Advanced', variant: 'info' as const, color: 'from-blue-400 to-purple-500' };
+    if (level >= 4) return { label: 'Intermediate', variant: 'success' as const, color: 'from-green-400 to-blue-500' };
+    return { label: 'Beginner', variant: 'default' as const, color: 'from-gray-400 to-gray-500' };
+  };
+
+  const levelInfo = getLevelInfo(level);
+
+  return (
+    <div className={`inline-flex items-center space-x-2 ${className}`}>
+      <div className={`bg-gradient-to-r ${levelInfo.color} text-white px-3 py-1 rounded-full text-sm font-bold`}>
+        Level {level}
+      </div>
+      {showProgress && maxLevel && (
+        <div className="flex items-center space-x-1 text-xs text-gray-500">
+          <span>{level}</span>
+          <span>/</span>
+          <span>{maxLevel}</span>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Points Badge Component
+interface PointsBadgeProps {
+  points: number;
+  label?: string;
+  icon?: string;
+  animate?: boolean;
+  className?: string;
+}
+
+export const PointsBadge: React.FC<PointsBadgeProps> = ({
+  points,
+  label = 'AP',
+  icon = '⚡',
+  animate = false,
+  className = ''
+}) => {
+  const formatPoints = (points: number): string => {
+    if (points >= 1000000) {
+      return `${(points / 1000000).toFixed(1)}M`;
+    }
+    if (points >= 1000) {
+      return `${(points / 1000).toFixed(1)}K`;
+    }
+    return points.toString();
   };
 
   return (
-    <Badge 
-      variant={getVariantByLevel(level)} 
-      size={size} 
-      rounded 
-      className={className}
-    >
-      {showLevel && `Lvl ${level}`}
-      {levelTitle && (showLevel ? ` • ${levelTitle}` : levelTitle)}
-    </Badge>
+    <div className={`inline-flex items-center space-x-1 ${className}`}>
+      <span className={`text-lg ${animate ? 'animate-pulse' : ''}`}>{icon}</span>
+      <span className="font-bold text-primary">{formatPoints(points)}</span>
+      <span className="text-sm text-gray-500">{label}</span>
+    </div>
   );
 };
