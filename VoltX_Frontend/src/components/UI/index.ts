@@ -74,3 +74,9 @@ export {
   useErrorHandler,
   type ErrorFallbackProps
 } from './ErrorBoundary';
+
+// Notification Components
+export {
+  NotificationBell,
+  NotificationToast
+} from './NotificationBell';
