@@ -14,6 +14,14 @@ export {
 
 export { Input } from './Input';
 
+// Enhanced Form Components
+export {
+  EnhancedInput,
+  PasswordInput,
+  EnhancedTextarea,
+  EnhancedSelect
+} from './EnhancedForms';
+
 // Badge Components
 export {
   Badge,
