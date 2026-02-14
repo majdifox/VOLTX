@@ -44,3 +44,25 @@ export {
   ProgressLoading,
   PulseLoading
 } from './LoadingSpinner';
+
+// Advanced Loading Components
+export {
+  Shimmer,
+  TableLoading,
+  ChatLoading,
+  FormLoading,
+  GridLoading,
+  ImageLoading,
+  TypingIndicator,
+  SmartLoading,
+  useLoadingState
+} from './AdvancedLoading';
+
+// Error Boundary Components
+export {
+  ErrorBoundary,
+  AsyncErrorBoundary,
+  withErrorBoundary,
+  useErrorHandler,
+  type ErrorFallbackProps
+} from './ErrorBoundary';
