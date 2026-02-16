@@ -38,3 +38,37 @@ export interface AccountActionRequest {
   reason: string;
   durationDays?: number;
 }
+
+export enum NotificationType {
+  EVENT_ACCEPTED = 'EVENT_ACCEPTED',
+  EVENT_KICKED = 'EVENT_KICKED',
+  VERIFICATION_APPROVED = 'VERIFICATION_APPROVED',
+  VERIFICATION_DECLINED = 'VERIFICATION_DECLINED',
+  EVENT_APPROVED = 'EVENT_APPROVED',
+  EVENT_DENIED = 'EVENT_DENIED',
+  LEVEL_UP = 'LEVEL_UP',
+  GENERAL = 'GENERAL',
+}
+
+export interface NotificationItem {
+  id: number;
+  type: NotificationType;
+  message: string;
+  referenceId: number;
+  read: boolean;
+  createdAt: string;
+}
+
+export interface LeaderboardEntry {
+  position: number;
+  userId: number;
+  firstName: string;
+  lastName: string;
+  username: string;
+  profilePicture: string;
+  country: string;
+  countryFlag: string;
+  level: number;
+  adrenalinePoints: number;
+  role?: string;
+}
