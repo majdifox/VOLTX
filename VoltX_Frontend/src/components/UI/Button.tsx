@@ -11,7 +11,10 @@ interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
   fullWidth?: boolean;
   className?: string;
+  iconLeft?: React.ReactNode;
+  iconRight?: React.ReactNode;
 }
+
 
 export const Button: React.FC<ButtonProps> = ({
   children,
@@ -22,7 +25,9 @@ export const Button: React.FC<ButtonProps> = ({
   onClick,
   type = 'button',
   fullWidth = false,
-  className = ''
+  className = '',
+  iconLeft,
+  iconRight,
 }) => {
   const getVariantStyles = () => {
     switch (variant) {
@@ -75,7 +80,11 @@ export const Button: React.FC<ButtonProps> = ({
           Loading...
         </div>
       ) : (
-        children
+        <span className="flex items-center gap-2">
+          {iconLeft && <span className="shrink-0">{iconLeft}</span>}
+          {children}
+          {iconRight && <span className="shrink-0">{iconRight}</span>}
+        </span>
       )}
     </button>
   );
