@@ -1,17 +1,34 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../stores/authStore';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
+  const { setAuth } = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    // TODO: connect to authService
-    console.log('login', { email, password });
+    setLoading(true);
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      if (!res.ok) throw new Error('Invalid credentials');
+      const data = await res.json();
+      setAuth(data.user, data.accessToken, data.refreshToken);
+      navigate('/app/feed');
+    } catch (err: any) {
+      setError(err.message || 'Login failed');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -21,9 +38,7 @@ const LoginPage: React.FC = () => {
           <div style={{ color: '#00d4ff', fontSize: 32, fontWeight: 900 }}>⚡ VOLTX</div>
           <h1 style={{ fontSize: 24, fontWeight: 700, marginTop: 8 }}>Welcome back</h1>
         </div>
-
         {error && <div style={{ background: 'rgba(255,45,85,0.1)', border: '1px solid #ff2d55', borderRadius: 8, padding: '10px 16px', marginBottom: 16, color: '#ff2d55', fontSize: 14 }}>{error}</div>}
-
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: 16 }}>
             <label style={{ display: 'block', marginBottom: 6, fontSize: 14, color: '#a0a0a0' }}>Email</label>
@@ -33,14 +48,12 @@ const LoginPage: React.FC = () => {
             <label style={{ display: 'block', marginBottom: 6, fontSize: 14, color: '#a0a0a0' }}>Password</label>
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} style={{ width: '100%', background: '#1a1a1a', border: '1px solid #2a2a2a', borderRadius: 8, padding: '12px 16px', color: '#fff', fontSize: 16, boxSizing: 'border-box' }} required />
           </div>
-          <button type="submit" style={{ width: '100%', background: '#00d4ff', color: '#000', padding: '14px', borderRadius: 10, fontSize: 16, fontWeight: 700, cursor: 'pointer', border: 'none' }}>
-            Sign In
+          <button type="submit" disabled={loading} style={{ width: '100%', background: '#00d4ff', color: '#000', padding: '14px', borderRadius: 10, fontSize: 16, fontWeight: 700, cursor: 'pointer', border: 'none', opacity: loading ? 0.7 : 1 }}>
+            {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
-
         <p style={{ textAlign: 'center', marginTop: 20, color: '#a0a0a0', fontSize: 14 }}>
-          Don't have an account?{' '}
-          <span onClick={() => navigate('/register')} style={{ color: '#00d4ff', cursor: 'pointer' }}>Sign up</span>
+          Don't have an account? <span onClick={() => navigate('/register')} style={{ color: '#00d4ff', cursor: 'pointer' }}>Sign up</span>
         </p>
       </div>
     </div>
