@@ -20,7 +20,10 @@ interface InputProps {
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
   className?: string;
+  name?: string;
+  maxLength?: number;
 }
+
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(({
   label,
