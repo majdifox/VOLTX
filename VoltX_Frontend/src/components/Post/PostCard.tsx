@@ -47,3 +47,5 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike }) => {
 };
 
 export default PostCard;
+
+// TODO: comments section
