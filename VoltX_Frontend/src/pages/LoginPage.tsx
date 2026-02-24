@@ -23,7 +23,7 @@ const LoginPage: React.FC = () => {
       if (!res.ok) throw new Error('Invalid credentials');
       const data = await res.json();
       setAuth(data.user, data.accessToken, data.refreshToken);
-      navigate('/app/feed');
+      navigate('/app/feed', { replace: true });
     } catch (err: any) {
       setError(err.message || 'Login failed');
     } finally {
@@ -61,3 +61,4 @@ const LoginPage: React.FC = () => {
 };
 
 export default LoginPage;
+
