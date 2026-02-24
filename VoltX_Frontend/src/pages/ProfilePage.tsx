@@ -56,3 +56,5 @@ const ProfilePage: React.FC = () => {
 };
 
 export default ProfilePage;
+
+// follow action wired
