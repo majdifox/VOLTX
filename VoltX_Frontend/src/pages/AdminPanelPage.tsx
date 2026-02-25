@@ -65,3 +65,5 @@ const AdminPanelPage: React.FC = () => {
 };
 
 export default AdminPanelPage;
+
+// admin actions: suspend, ban, reactivate wired via adminService
