@@ -5,4 +5,4 @@ export * from './eventService';
 export * from './commentService';
 export * from './notificationService';
 export * from './leaderboardService';
-export { default as api } from './api';
+export { default as api } from './api';export * from './adminService';
