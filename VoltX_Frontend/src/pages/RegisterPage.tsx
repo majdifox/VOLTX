@@ -12,7 +12,8 @@ const RegisterPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError('')
+    setForm({ ...form });
     // TODO: connect to authService.register
     console.log('register', form);
   };
@@ -58,3 +59,4 @@ const RegisterPage: React.FC = () => {
 };
 
 export default RegisterPage;
+
