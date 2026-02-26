@@ -8,7 +8,7 @@ const EventsPage: React.FC = () => {
   useEffect(() => {
     fetch('/api/events')
       .then(r => r.json())
-      .then(d => setEvents(Array.isArray(d) ? d : []))
+      .then(d => setEvents(Array.isArray(d) ? d : d?.content || []))
       .catch(console.error)
       .finally(() => setLoading(false));
   }, []);
@@ -29,3 +29,4 @@ const EventsPage: React.FC = () => {
 };
 
 export default EventsPage;
+
