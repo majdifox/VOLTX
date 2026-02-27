@@ -88,3 +88,10 @@ export const eventService = {
     }
   },
 };
+// Get current user's events
+export const getMyEvents = async (): Promise<any[]> => {
+  try {
+    const { data } = await (await import('./api')).default.get('/events/my');
+    return data;
+  } catch { return []; }
+};
