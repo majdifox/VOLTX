@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React
+import CommentSection from './CommentSection';, { useState } from 'react';
 
 interface PostCardProps {
   post: {
@@ -48,6 +49,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike }) => {
 
 export default PostCard;
 
-// TODO: comments section
+<CommentSection postId={post.id} />
 
 // avatar fallback improved
+
