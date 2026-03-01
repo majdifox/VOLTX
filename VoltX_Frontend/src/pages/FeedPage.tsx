@@ -4,6 +4,7 @@ import PostCard from '../components/Post/PostCard';
 const FeedPage: React.FC = () => {
   const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     const fetchFeed = async () => {
@@ -42,3 +43,4 @@ const FeedPage: React.FC = () => {
 };
 
 export default FeedPage;
+
