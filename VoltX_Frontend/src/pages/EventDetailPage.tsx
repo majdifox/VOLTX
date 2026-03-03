@@ -52,3 +52,5 @@ const EventDetailPage: React.FC = () => {
 
 export default EventDetailPage;
 
+
+// fix: hide apply button if current user is organizer
