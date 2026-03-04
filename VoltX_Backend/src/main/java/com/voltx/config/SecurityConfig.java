@@ -66,3 +66,5 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 }
+
+// cors OPTIONS preflight fixed
