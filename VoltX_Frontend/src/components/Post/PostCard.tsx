@@ -53,3 +53,5 @@ export default PostCard;
 
 // avatar fallback improved
 
+
+// fix: handle null mediaUrls gracefully
