@@ -27,7 +27,7 @@ const LeaderboardPage: React.FC = () => {
             <div style={{ color: '#a0a0a0', fontSize: 13 }}>Level {u.level} · {u.country}</div>
           </div>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ color: '#00d4ff', fontWeight: 800, fontSize: 18 }}>{u.adrenalinePoints}</div>
+            <div style={{ color: '#00d4ff', fontWeight: 800, fontSize: 18 }}>{u.adrenalinePoints?.toLocaleString()}</div>
             <div style={{ color: '#a0a0a0', fontSize: 12 }}>AP</div>
           </div>
         </div>
@@ -37,3 +37,4 @@ const LeaderboardPage: React.FC = () => {
 };
 
 export default LeaderboardPage;
+
