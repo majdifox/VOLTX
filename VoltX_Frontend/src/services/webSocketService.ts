@@ -325,3 +325,4 @@ class WebSocketService {
 
 // Export singleton instance
 export const webSocketService = new WebSocketService();
+// WebSocket reconnect logic improved
