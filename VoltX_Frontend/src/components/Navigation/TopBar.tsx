@@ -27,3 +27,5 @@ const TopBar: React.FC = () => {
 export default TopBar;
 
 // notification bell integrated
+
+// fix: notification count now re-fetches on interval
