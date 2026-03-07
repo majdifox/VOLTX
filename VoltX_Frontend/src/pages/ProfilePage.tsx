@@ -58,3 +58,5 @@ const ProfilePage: React.FC = () => {
 export default ProfilePage;
 
 // follow action wired
+
+// fix: profile now uses 'me' endpoint for own profile
