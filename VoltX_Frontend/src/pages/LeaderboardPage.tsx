@@ -38,3 +38,5 @@ const LeaderboardPage: React.FC = () => {
 
 export default LeaderboardPage;
 
+
+// fix: medal ordering now based on server rank field
