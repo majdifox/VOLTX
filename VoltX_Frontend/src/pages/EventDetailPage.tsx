@@ -54,3 +54,5 @@ export default EventDetailPage;
 
 
 // fix: hide apply button if current user is organizer
+
+// fix: organizer now checked via user.id === event.organizer.id
