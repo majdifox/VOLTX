@@ -12,6 +12,9 @@ import CreatePostPage from './pages/CreatePostPage';
 import LeaderboardPage from './pages/LeaderboardPage';
 import ProfilePage from './pages/ProfilePage';
 import SettingsPage from './pages/SettingsPage';
+import SearchPage from './pages/SearchPage';
+import NotificationsPage from './pages/NotificationsPage';
+import MyEventsPage from './pages/MyEventsPage';
 import AppLayout from './components/Layout/AppLayout';
 
 const PrivateRoute: React.FC<{ element: React.ReactElement }> = ({ element }) => {
@@ -43,3 +46,4 @@ const App: React.FC = () => {
 };
 
 export default App;
+
