@@ -60,3 +60,5 @@ const RegisterPage: React.FC = () => {
 
 export default RegisterPage;
 
+
+// fix: password min length 8 enforced client-side
