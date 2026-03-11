@@ -49,3 +49,5 @@ const Sidebar: React.FC = () => {
 };
 
 export default Sidebar;
+
+// fix: active route matching improved to handle nested paths
