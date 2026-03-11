@@ -44,3 +44,5 @@ const CommentSection: React.FC<Props> = ({ postId, initialComments = [] }) => {
 };
 
 export default CommentSection;
+
+// fix: comment now shown immediately via optimistic update
