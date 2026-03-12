@@ -16,6 +16,7 @@ import SearchPage from './pages/SearchPage';
 import NotificationsPage from './pages/NotificationsPage';
 import MyEventsPage from './pages/MyEventsPage';
 import AppLayout from './components/Layout/AppLayout';
+import BannedPage from './pages/BannedPage';
 
 const PrivateRoute: React.FC<{ element: React.ReactElement }> = ({ element }) => {
   const { isAuthenticated } = useAuthStore();
@@ -39,6 +40,7 @@ const App: React.FC = () => {
           <Route path="profile/:id" element={<ProfilePage />} />
           <Route path="settings" element={<SettingsPage />} />
         </Route>
+        <Route path="/banned" element={<BannedPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
@@ -46,4 +48,5 @@ const App: React.FC = () => {
 };
 
 export default App;
+
 
