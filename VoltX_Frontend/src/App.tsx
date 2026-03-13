@@ -50,3 +50,5 @@ const App: React.FC = () => {
 export default App;
 
 
+
+// GlobalBannedGuard: redirects banned users to /banned on mount
