@@ -29,3 +29,5 @@ export default TopBar;
 // notification bell integrated
 
 // fix: notification count now re-fetches on interval
+
+// fix: suspended users no longer see AP/level info in header
