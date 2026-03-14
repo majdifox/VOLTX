@@ -71,3 +71,5 @@ export default AdminPanelPage;
 // verification review section added
 
 // user filter: status and role dropdowns added
+
+// moderation actions (suspend/ban/reactivate) fully wired to adminService
