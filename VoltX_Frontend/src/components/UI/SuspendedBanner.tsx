@@ -16,7 +16,7 @@ const SuspendedBanner: React.FC = () => {
       setTimeLeft(`${d}d ${h}h ${m}m remaining`);
     };
     update();
-    const i = setInterval(update, 60000);
+    const i = setInterval(update, 30000);
     return () => clearInterval(i);
   }, [user]);
 
@@ -34,3 +34,4 @@ const SuspendedBanner: React.FC = () => {
 };
 
 export default SuspendedBanner;
+
