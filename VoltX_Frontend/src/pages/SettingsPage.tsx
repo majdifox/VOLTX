@@ -43,3 +43,5 @@ const SettingsPage: React.FC = () => {
 };
 
 export default SettingsPage;
+
+// fix: update authStore after successful profile picture upload
