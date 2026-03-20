@@ -58,3 +58,5 @@ export default EventDetailPage;
 // fix: organizer now checked via user.id === event.organizer.id
 
 // feat: organizer can complete event
+
+// feat: organizer can cancel event
