@@ -35,3 +35,5 @@ const SuspendedBanner: React.FC = () => {
 
 export default SuspendedBanner;
 
+
+// fix: countdown no longer flickers on re-render
