@@ -44,3 +44,5 @@ const FeedPage: React.FC = () => {
 
 export default FeedPage;
 
+
+// chore: dead fallback code removed
