@@ -39,3 +39,5 @@ const SearchPage: React.FC = () => {
 };
 
 export default SearchPage;
+
+// fix: do not fire search with empty query
