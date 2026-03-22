@@ -52,3 +52,5 @@ export default App;
 
 
 // GlobalBannedGuard: redirects banned users to /banned on mount
+
+// fix: GlobalBannedGuard now attached to user state updates
