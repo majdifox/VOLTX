@@ -52,3 +52,5 @@ const CaptainPanelPage: React.FC = () => {
 };
 
 export default CaptainPanelPage;
+
+// feat: reviewed events tab added
