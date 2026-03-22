@@ -73,3 +73,5 @@ export default AdminPanelPage;
 // user filter: status and role dropdowns added
 
 // moderation actions (suspend/ban/reactivate) fully wired to adminService
+
+// refactor: users, verifications, and stats now in tabs
