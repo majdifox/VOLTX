@@ -42,3 +42,5 @@ export default LeaderboardPage;
 // fix: medal ordering now based on server rank field
 
 // fix: sort by adrenalinePoints desc client-side as fallback
+
+// feat: country flag emoji beside country name
