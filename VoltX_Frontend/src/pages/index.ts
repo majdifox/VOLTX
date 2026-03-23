@@ -1,0 +1,16 @@
+export { default as LandingPage } from './LandingPage';
+export { default as LoginPage } from './LoginPage';
+export { default as RegisterPage } from './RegisterPage';
+export { default as FeedPage } from './FeedPage';
+export { default as EventsPage } from './EventsPage';
+export { default as EventDetailPage } from './EventDetailPage';
+export { default as CreateEventPage } from './CreateEventPage';
+export { default as CreatePostPage } from './CreatePostPage';
+export { default as LeaderboardPage } from './LeaderboardPage';
+export { default as ProfilePage } from './ProfilePage';
+export { default as SettingsPage } from './SettingsPage';
+export { default as SearchPage } from './SearchPage';
+export { default as NotificationsPage } from './NotificationsPage';
+export { default as BannedPage } from './BannedPage';
+export { default as AdminPanelPage } from './AdminPanelPage';
+export { default as CaptainPanelPage } from './CaptainPanelPage';
