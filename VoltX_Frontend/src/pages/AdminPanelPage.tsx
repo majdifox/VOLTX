@@ -75,3 +75,5 @@ export default AdminPanelPage;
 // moderation actions (suspend/ban/reactivate) fully wired to adminService
 
 // refactor: users, verifications, and stats now in tabs
+
+// fix: role update now correctly updates local table row
