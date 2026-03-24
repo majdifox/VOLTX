@@ -48,3 +48,5 @@ export default CommentSection;
 // fix: comment now shown immediately via optimistic update
 
 // style(component): CommentSection send button rounded
+
+// fix(component): CommentSection shows correct comment count
