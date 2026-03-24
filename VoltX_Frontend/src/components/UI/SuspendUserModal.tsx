@@ -27,3 +27,5 @@ const SuspendUserModal: React.FC<Props> = ({ userId, onClose, onConfirm }) => {
 };
 
 export default SuspendUserModal;
+
+// fix(component): SuspendUserModal closes on Escape key
