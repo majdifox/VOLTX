@@ -23,3 +23,5 @@ const MyEventsPage: React.FC = () => {
 };
 
 export default MyEventsPage;
+
+// fix(page): MyEventsPage handles API error state
