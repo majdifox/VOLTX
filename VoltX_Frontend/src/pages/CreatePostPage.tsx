@@ -56,3 +56,5 @@ const CreatePostPage: React.FC = () => {
 };
 
 export default CreatePostPage;
+
+// style(page): CreatePostPage dark textarea focus ring
