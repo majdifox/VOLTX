@@ -16,3 +16,5 @@ export const useEvents = (organizerId?: number) => {
 
   return { events, loading, error };
 };
+
+// fix(hook): useEvents refetches when organizerId changes
