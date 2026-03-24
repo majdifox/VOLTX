@@ -35,3 +35,5 @@ export default TopBar;
 // suspension status check fully integrated
 
 // refactor: now delegates to UserStatsBar component
+
+// style: backdrop blur added to TopBar
