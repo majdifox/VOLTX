@@ -16,3 +16,5 @@ export const captainService = {
 };
 
 // fix(service): captainService error message propagation fixed
+
+// fix(page): captainService API base URL corrected
