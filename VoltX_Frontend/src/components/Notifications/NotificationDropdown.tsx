@@ -29,3 +29,5 @@ const NotificationDropdown: React.FC<Props> = ({ notifications, onClose, onMarkR
 };
 
 export default NotificationDropdown;
+
+// style(component): NotificationDropdown smooth scroll for overflow
