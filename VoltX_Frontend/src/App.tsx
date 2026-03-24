@@ -56,3 +56,5 @@ export default App;
 // fix: GlobalBannedGuard now attached to user state updates
 
 // chore: legacy test routes cleaned up
+
+// chore: update package.json scripts for production build
