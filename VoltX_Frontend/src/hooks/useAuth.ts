@@ -12,3 +12,5 @@ export const useAuth = () => {
 
   return { user, isAuthenticated, setAuth, signOut };
 };
+
+// chore: add index.ts barrel for hooks directory
