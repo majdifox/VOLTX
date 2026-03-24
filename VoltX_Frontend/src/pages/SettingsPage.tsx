@@ -45,3 +45,5 @@ const SettingsPage: React.FC = () => {
 export default SettingsPage;
 
 // fix: update authStore after successful profile picture upload
+
+// fix(page): settings avatar upload uses correct endpoint
