@@ -95,3 +95,5 @@ export const getMyEvents = async (): Promise<any[]> => {
     return data;
   } catch { return []; }
 };
+
+// chore: final whitespace cleanup across service files
