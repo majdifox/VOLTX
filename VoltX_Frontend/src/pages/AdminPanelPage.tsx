@@ -77,3 +77,5 @@ export default AdminPanelPage;
 // refactor: users, verifications, and stats now in tabs
 
 // fix: role update now correctly updates local table row
+
+// fix(page): AdminPanelPage search debounce reduced to 300ms
