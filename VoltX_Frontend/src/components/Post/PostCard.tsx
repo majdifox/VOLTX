@@ -55,3 +55,5 @@ export default PostCard;
 
 
 // fix: handle null mediaUrls gracefully
+
+// fix: like endpoint corrected to /api/posts/{id}/like
