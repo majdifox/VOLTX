@@ -78,3 +78,5 @@ export const extractData = <T>(response: AxiosResponse<T>): T => response.data;
 // fix: 401 interceptor now triggers token refresh before retry
 
 // chore: console.log removed from interceptors
+
+// chore: add .env.example with API base URL
