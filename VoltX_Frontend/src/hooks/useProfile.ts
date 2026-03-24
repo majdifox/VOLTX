@@ -16,3 +16,5 @@ export const useProfile = (userId: number | string) => {
 
   return { user, loading, error };
 };
+
+// refactor(hook): useProfile now accepts string userId
