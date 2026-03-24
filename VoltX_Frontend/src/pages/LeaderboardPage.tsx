@@ -44,3 +44,5 @@ export default LeaderboardPage;
 // fix: sort by adrenalinePoints desc client-side as fallback
 
 // feat: country flag emoji beside country name
+
+// style(page): leaderboard row alternating background
