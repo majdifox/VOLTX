@@ -80,3 +80,5 @@ export const extractData = <T>(response: AxiosResponse<T>): T => response.data;
 // chore: console.log removed from interceptors
 
 // chore: add .env.example with API base URL
+
+// fix(api): set correct Content-Type for multipart uploads
