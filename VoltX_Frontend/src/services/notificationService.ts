@@ -44,3 +44,5 @@ export const notificationService = {
     }
   },
 };
+
+// refactor(service): simplify notificationService response handling
