@@ -59,3 +59,5 @@ export default PostCard;
 // fix: like endpoint corrected to /api/posts/{id}/like
 
 // style(component): consistent font weight in PostCard header
+
+// fix(component): PostCard author fallback for deleted users
