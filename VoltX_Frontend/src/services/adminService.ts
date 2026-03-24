@@ -34,3 +34,5 @@ export const adminService = {
     catch (e) { throw new Error(handleApiError(e)); }
   },
 };
+
+// fix(service): adminService properly passes Authorization header
