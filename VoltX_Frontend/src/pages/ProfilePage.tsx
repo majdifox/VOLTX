@@ -62,3 +62,5 @@ export default ProfilePage;
 // fix: profile now uses 'me' endpoint for own profile
 
 // chore: unused imports removed
+
+// fix(page): profile fetch uses me endpoint for self
