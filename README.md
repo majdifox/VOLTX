@@ -11,3 +11,5 @@ VoltX connects thrill-seekers with events, challenges, and a community of like-m
 - Backend: Spring Boot
 - Frontend: React
 - Database: PostgreSQL
+
+// chore: remove outdated README sections
