@@ -48,3 +48,5 @@ const EventMembersPage: React.FC = () => {
 };
 
 export default EventMembersPage;
+
+// fix(page): EventMembersPage shows organizer badge
