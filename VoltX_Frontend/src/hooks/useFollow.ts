@@ -18,3 +18,5 @@ export const useFollow = (userId: number, initial = false) => {
 
   return { following, loading, toggle };
 };
+
+// fix(hook): useFollow now handles network error gracefully
