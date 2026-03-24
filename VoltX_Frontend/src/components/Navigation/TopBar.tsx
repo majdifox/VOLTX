@@ -37,3 +37,5 @@ export default TopBar;
 // refactor: now delegates to UserStatsBar component
 
 // style: backdrop blur added to TopBar
+
+// feat(component): add tooltip to AP badge in TopBar
