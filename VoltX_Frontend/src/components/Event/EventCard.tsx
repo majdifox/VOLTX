@@ -49,3 +49,5 @@ export default EventCard;
 // fix: eventDate formatted consistently
 
 // refactor: extract RiskBadge from EventCard
+
+// style(component): EventCard pulse animation on risk badge
