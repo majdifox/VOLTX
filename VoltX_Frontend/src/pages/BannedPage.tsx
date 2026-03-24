@@ -29,3 +29,5 @@ const BannedPage: React.FC = () => {
 };
 
 export default BannedPage;
+
+// style: premium red gradient applied
