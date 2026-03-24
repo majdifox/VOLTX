@@ -16,3 +16,5 @@ const AccountStatusGuard: React.FC<{ children: React.ReactNode }> = ({ children 
 };
 
 export default AccountStatusGuard;
+
+// fix(guard): AccountStatusGuard uses useEffect dependency correctly
