@@ -45,3 +45,5 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
 export default EventCard;
 
 // style: hover highlight and transition polished
+
+// fix: eventDate formatted consistently
