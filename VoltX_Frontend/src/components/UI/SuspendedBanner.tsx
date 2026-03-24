@@ -37,3 +37,5 @@ export default SuspendedBanner;
 
 
 // fix: countdown no longer flickers on re-render
+
+// fix(component): SuspendedBanner timer cleanup on unmount
