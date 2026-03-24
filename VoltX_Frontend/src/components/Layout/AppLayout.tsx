@@ -41,3 +41,5 @@ const AppLayout: React.FC = () => {
 };
 
 export default AppLayout;
+
+// fix(layout): AppLayout main padding adjusts on mobile
