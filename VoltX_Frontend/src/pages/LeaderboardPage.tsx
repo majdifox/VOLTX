@@ -46,3 +46,5 @@ export default LeaderboardPage;
 // feat: country flag emoji beside country name
 
 // style(page): leaderboard row alternating background
+
+// style(page): gradient border card on LeaderboardPage top 3
