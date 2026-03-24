@@ -62,3 +62,5 @@ export default EventDetailPage;
 // feat: organizer can cancel event
 
 // fix: handle null organizer gracefully
+
+// style(page): EventDetailPage hero section spacing
