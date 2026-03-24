@@ -55,3 +55,5 @@ export default Sidebar;
 // fix: startsWith check now handles trailing slashes
 
 // style(layout): polished Sidebar hover transition timing
+
+// fix(layout): Sidebar z-index above page content
