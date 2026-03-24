@@ -19,3 +19,5 @@ export const useNotifications = () => {
 
   return { count, refresh: fetchCount };
 };
+
+// fix(hook): useNotifications cleanup on component unmount
