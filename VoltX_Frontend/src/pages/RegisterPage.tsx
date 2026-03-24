@@ -64,3 +64,5 @@ export default RegisterPage;
 // fix: password min length 8 enforced client-side
 
 // fix: show duplicate username error from backend
+
+// fix(page): normalize username to lowercase on register
