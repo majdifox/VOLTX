@@ -48,3 +48,5 @@ export default LeaderboardPage;
 // style(page): leaderboard row alternating background
 
 // style(page): gradient border card on LeaderboardPage top 3
+
+// fix(page): LeaderboardPage medal colors correct for positions 1-3
