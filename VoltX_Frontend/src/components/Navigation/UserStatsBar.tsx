@@ -15,3 +15,5 @@ const UserStatsBar: React.FC = () => {
 };
 
 export default UserStatsBar;
+
+// style(layout): UserStatsBar font weight 800 for AP number
