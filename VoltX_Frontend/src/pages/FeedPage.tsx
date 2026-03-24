@@ -46,3 +46,5 @@ export default FeedPage;
 
 
 // chore: dead fallback code removed
+
+// feat: manual refresh button on FeedPage
