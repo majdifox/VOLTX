@@ -60,3 +60,5 @@ export default EventDetailPage;
 // feat: organizer can complete event
 
 // feat: organizer can cancel event
+
+// fix: handle null organizer gracefully
