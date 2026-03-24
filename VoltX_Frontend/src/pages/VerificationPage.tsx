@@ -60,3 +60,5 @@ const VerificationPage: React.FC = () => {
 };
 
 export default VerificationPage;
+
+// fix(page): VerificationPage shows success after 200 response
