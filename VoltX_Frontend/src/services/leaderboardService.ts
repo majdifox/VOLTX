@@ -20,3 +20,5 @@ export const leaderboardService = {
     }
   },
 };
+
+// fix(service): leaderboardService returns empty array on 404
