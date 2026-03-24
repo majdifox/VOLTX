@@ -33,3 +33,5 @@ export default TopBar;
 // fix: suspended users no longer see AP/level info in header
 
 // suspension status check fully integrated
+
+// refactor: now delegates to UserStatsBar component
