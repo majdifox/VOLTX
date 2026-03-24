@@ -30,3 +30,5 @@ const EventsPage: React.FC = () => {
 
 export default EventsPage;
 
+
+// style(page): improve empty state illustration for EventsPage
