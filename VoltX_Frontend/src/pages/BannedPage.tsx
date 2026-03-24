@@ -33,3 +33,5 @@ export default BannedPage;
 // style: premium red gradient applied
 
 // fix: no initial flicker before redirect
+
+// style(page): BannedPage final premium design
