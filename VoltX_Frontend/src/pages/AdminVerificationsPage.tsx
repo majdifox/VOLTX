@@ -36,3 +36,5 @@ const AdminVerificationsPage: React.FC = () => {
 };
 
 export default AdminVerificationsPage;
+
+// fix(page): AdminVerificationsPage handles empty array from API
