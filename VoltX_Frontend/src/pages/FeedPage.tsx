@@ -48,3 +48,5 @@ export default FeedPage;
 // chore: dead fallback code removed
 
 // feat: manual refresh button on FeedPage
+
+// chore: remove TODO comments from FeedPage
