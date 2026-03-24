@@ -56,3 +56,5 @@ export default CaptainPanelPage;
 // feat: reviewed events tab added
 
 // fix(page): CaptainPanel rejection reason persists in form
+
+// fix(page): CaptainPanel shows event organizer name
