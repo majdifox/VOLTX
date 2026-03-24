@@ -66,3 +66,5 @@ export default ProfilePage;
 // fix(page): profile fetch uses me endpoint for self
 
 // style(page): ProfilePage bio section line height adjusted
+
+// refactor: use optional chaining throughout ProfilePage
