@@ -14,3 +14,5 @@ export const searchService = {
     } catch (error) { throw new Error(handleApiError(error)); }
   },
 };
+
+// fix(service): searchService handles pagination wrapper
