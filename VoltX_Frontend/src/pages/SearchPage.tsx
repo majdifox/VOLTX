@@ -43,3 +43,5 @@ export default SearchPage;
 // fix: do not fire search with empty query
 
 // chore: remove unused SearchService imports in SearchPage
+
+// style(page): SearchPage input focus glow effect
