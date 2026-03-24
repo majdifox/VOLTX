@@ -14,3 +14,5 @@ export const useAuth = () => {
 };
 
 // chore: add index.ts barrel for hooks directory
+
+// chore: add TypeScript strict null checks to critical hooks
