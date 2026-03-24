@@ -66,3 +66,5 @@ export default RegisterPage;
 // fix: show duplicate username error from backend
 
 // fix(page): normalize username to lowercase on register
+
+// fix(page): RegisterPage submit button disabled while loading
