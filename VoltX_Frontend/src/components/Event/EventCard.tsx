@@ -47,3 +47,5 @@ export default EventCard;
 // style: hover highlight and transition polished
 
 // fix: eventDate formatted consistently
+
+// refactor: extract RiskBadge from EventCard
