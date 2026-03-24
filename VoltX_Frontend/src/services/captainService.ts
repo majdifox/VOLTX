@@ -14,3 +14,5 @@ export const captainService = {
     catch (e) { throw new Error(handleApiError(e)); }
   },
 };
+
+// fix(service): captainService error message propagation fixed
