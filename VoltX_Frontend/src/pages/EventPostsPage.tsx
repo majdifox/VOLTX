@@ -26,3 +26,5 @@ const EventPostsPage: React.FC = () => {
 };
 
 export default EventPostsPage;
+
+// fix(page): EventPostsPage uses event token for auth
