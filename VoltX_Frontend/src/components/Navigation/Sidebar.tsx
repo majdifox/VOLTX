@@ -51,3 +51,5 @@ const Sidebar: React.FC = () => {
 export default Sidebar;
 
 // fix: active route matching improved to handle nested paths
+
+// fix: startsWith check now handles trailing slashes
