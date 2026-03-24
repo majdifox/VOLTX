@@ -82,3 +82,5 @@ export const extractData = <T>(response: AxiosResponse<T>): T => response.data;
 // chore: add .env.example with API base URL
 
 // fix(api): set correct Content-Type for multipart uploads
+
+// refactor(service): centralize token read via utility function
