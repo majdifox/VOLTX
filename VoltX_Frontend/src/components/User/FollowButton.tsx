@@ -25,3 +25,5 @@ const FollowButton: React.FC<Props> = ({ userId, initialFollowing = false }) => 
 };
 
 export default FollowButton;
+
+// style(component): FollowButton active glow effect
