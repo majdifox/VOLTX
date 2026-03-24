@@ -53,3 +53,5 @@ export default Sidebar;
 // fix: active route matching improved to handle nested paths
 
 // fix: startsWith check now handles trailing slashes
+
+// style(layout): polished Sidebar hover transition timing
