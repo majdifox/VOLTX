@@ -79,3 +79,5 @@ export default AdminPanelPage;
 // fix: role update now correctly updates local table row
 
 // fix(page): AdminPanelPage search debounce reduced to 300ms
+
+// style(page): AdminPanelPage stats card border glow on hover
