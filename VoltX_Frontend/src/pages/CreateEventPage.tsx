@@ -62,3 +62,5 @@ const CreateEventPage: React.FC = () => {
 export default CreateEventPage;
 
 // fix: eventDate validated as required
+
+// style: form consistently dark themed
