@@ -59,3 +59,5 @@ const LandingPage: React.FC = () => {
 export default LandingPage;
 
 // style: gradient text applied to hero headline
+
+// style(page): LandingPage feature cards hover shadow
