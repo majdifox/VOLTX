@@ -50,3 +50,5 @@ export default FeedPage;
 // feat: manual refresh button on FeedPage
 
 // chore: remove TODO comments from FeedPage
+
+// feat(page): add loading skeleton to FeedPage
