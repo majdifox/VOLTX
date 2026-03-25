@@ -1,0 +1,106 @@
+# ============================================
+# Frontend CI/CD Pipeline
+# Runs on: Push to main, Pull Requests
+# Actions: Lint, Build, Test
+# ============================================
+
+name: Frontend CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'VoltX_Frontend/**'
+      - '.github/workflows/frontend-ci.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'VoltX_Frontend/**'
+
+jobs:
+  lint-and-build:
+    name: Lint and Build Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: VoltX_Frontend/package-lock.json
+
+      - name: 📚 Install dependencies
+        working-directory: ./VoltX_Frontend
+        run: npm ci
+
+      - name: 🔍 Run ESLint
+        working-directory: ./VoltX_Frontend
+        run: npm run lint
+        continue-on-error: true
+
+      - name: 🏗️ Build application
+        working-directory: ./VoltX_Frontend
+        run: npm run build
+
+      - name: 📊 Check bundle size
+        working-directory: ./VoltX_Frontend
+        run: |
+          echo "📦 Build size analysis:"
+          du -sh dist/
+          du -sh dist/assets/
+
+      - name: 📦 Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: voltx-frontend-build
+          path: VoltX_Frontend/dist/
+          retention-days: 7
+
+  type-check:
+    name: TypeScript Type Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: VoltX_Frontend/package-lock.json
+
+      - name: 📚 Install dependencies
+        working-directory: ./VoltX_Frontend
+        run: npm ci
+
+      - name: 🔍 TypeScript check
+        working-directory: ./VoltX_Frontend
+        run: npx tsc --noEmit
+
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 🔒 Run npm audit
+        working-directory: ./VoltX_Frontend
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+
+      - name: 🔍 Check for outdated packages
+        working-directory: ./VoltX_Frontend
+        run: npm outdated || true

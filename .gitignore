@@ -1,23 +1,70 @@
 # IDE
 .idea/
 *.iml
+*.ipr
+*.iws
 .vscode/
+.settings/
+.project
+.classpath
 
 # Build
 target/
 build/
 dist/
+*.jar
+*.war
 
 # Dependencies
 node_modules/
+.npm
+.yarn-integrity
 
 # Environment
 .env
 .env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.backup
+*.bak
 
 # Logs
 *.log
+logs/
 
 # OS
 .DS_Store
 Thumbs.db
+ehthumbs.db
+
+# Docker
+.dockerignore
+
+# Database
+*.db
+*.sqlite
+
+# Uploads
+uploads/
+files/
+
+# Temporary
+*.tmp
+temp/
+*.swp
+*.swo
+
+# Test coverage
+coverage/
+.nyc_output
+
+# Spring Boot
+spring-boot-*.log
+
+# Security (important!)
+*.pem
+*.key
+*.crt
+secret.properties
+application-secret.properties

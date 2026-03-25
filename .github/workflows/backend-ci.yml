@@ -1,0 +1,115 @@
+# ============================================
+# Backend CI/CD Pipeline
+# Runs on: Push to main, Pull Requests
+# Actions: Test, Build, Package
+# ============================================
+
+name: Backend CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'VoltX_Backend/**'
+      - '.github/workflows/backend-ci.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'VoltX_Backend/**'
+
+jobs:
+  build-and-test:
+    name: Build and Test Backend
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: voltx_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: test_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: ☕ Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - name: 🔍 Verify Maven installation
+        run: mvn --version
+
+      - name: 🧪 Run tests
+        working-directory: ./VoltX_Backend
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/voltx_test
+          SPRING_DATASOURCE_USERNAME: postgres
+          SPRING_DATASOURCE_PASSWORD: test_password
+        run: mvn test --batch-mode --no-transfer-progress
+
+      - name: 🏗️ Build application
+        working-directory: ./VoltX_Backend
+        run: mvn clean package -DskipTests --batch-mode --no-transfer-progress
+
+      - name: 📊 Generate test report
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Backend Test Results
+          path: VoltX_Backend/target/surefire-reports/*.xml
+          reporter: java-junit
+          fail-on-error: false
+
+      - name: 📦 Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: voltx-backend-jar
+          path: VoltX_Backend/target/*.jar
+          retention-days: 7
+
+      - name: 📈 Upload test coverage
+        if: always()
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./VoltX_Backend/target/site/jacoco/jacoco.xml
+          flags: backend
+          name: backend-coverage
+          fail_ci_if_error: false
+
+  code-quality:
+    name: Code Quality Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: ☕ Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - name: 🔍 Run code quality checks
+        working-directory: ./VoltX_Backend
+        run: mvn verify -DskipTests --batch-mode --no-transfer-progress
+
+      - name: 📊 SonarCloud Scan (Optional)
+        if: false  # Enable when SonarCloud is configured
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

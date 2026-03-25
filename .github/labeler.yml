@@ -1,0 +1,60 @@
+# ============================================
+# Auto Labeler Configuration
+# Automatically labels PRs based on files changed
+# ============================================
+
+# Backend labels
+backend:
+  - changed-files:
+    - any-glob-to-any-file: 'VoltX_Backend/**/*'
+
+# Frontend labels
+frontend:
+  - changed-files:
+    - any-glob-to-any-file: 'VoltX_Frontend/**/*'
+
+# Docker/Infrastructure labels
+docker:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+      - '**/*.Dockerfile'
+      - '**/Dockerfile'
+
+# CI/CD labels
+ci-cd:
+  - changed-files:
+    - any-glob-to-any-file: '.github/**/*'
+
+# Documentation labels
+documentation:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/*.md'
+      - 'docs/**/*'
+
+# Database labels
+database:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/*migration*'
+      - '**/*schema*'
+      - '**/application.properties'
+      - '**/application.yml'
+
+# Dependencies labels
+dependencies:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'pom.xml'
+      - 'package.json'
+      - 'package-lock.json'
+
+# Tests labels
+tests:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/test/**/*'
+      - '**/*.test.*'
+      - '**/*.spec.*'
