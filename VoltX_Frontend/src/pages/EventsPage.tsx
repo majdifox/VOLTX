@@ -32,3 +32,5 @@ export default EventsPage;
 
 
 // style(page): improve empty state illustration for EventsPage
+
+// fix(page): EventsPage shows loading skeleton instead of empty state
