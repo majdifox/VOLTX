@@ -49,3 +49,5 @@ export default SettingsPage;
 // fix(page): settings avatar upload uses correct endpoint
 
 // style(page): SettingsPage form labels bold text
+
+// fix(page): SettingsPage initial form values populated from user store
