@@ -41,3 +41,5 @@ export default TopBar;
 // feat(component): add tooltip to AP badge in TopBar
 
 // fix(layout): TopBar not re-rendering after user update
+
+// style(component): notification badge pulse animation
