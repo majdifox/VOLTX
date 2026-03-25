@@ -39,3 +39,5 @@ export default TopBar;
 // style: backdrop blur added to TopBar
 
 // feat(component): add tooltip to AP badge in TopBar
+
+// fix(layout): TopBar not re-rendering after user update
