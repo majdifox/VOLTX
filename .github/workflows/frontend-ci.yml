@@ -54,7 +54,7 @@ jobs:
           du -sh dist/assets/
 
       - name: 📦 Upload build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: voltx-frontend-build
           path: VoltX_Frontend/dist/
